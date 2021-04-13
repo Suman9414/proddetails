@@ -18,7 +18,8 @@ namespace Productdetails.Controllers
         [HttpPost]
         public Product InsertCustomer(Product _product)
         {
-            using (SignupForm_TestEntities entities = new SignupForm_TestEntities())
+        try{
+              using (SignupForm_TestEntities entities = new SignupForm_TestEntities())
             {
                 entities.Products.Add(_product);
                 entities.SaveChanges();
@@ -26,13 +27,19 @@ namespace Productdetails.Controllers
 
             return _product;
         }
+            catch (Exception ex)
+            {
+              
+            }
+              return _product;
+        }
 
         [Route("api/AjaxAPI/UpdateProduct")]
         [HttpPost]
         public bool UpdateCustomer(Product _product)
         {
-          
-                Product updatedproduct = (from c in entities.Products
+          try{
+            Product updatedproduct = (from c in entities.Products
                                             where c.Id == _product.Id
                                             select c).FirstOrDefault();
             updatedproduct.Name = _product.Name;
@@ -43,18 +50,29 @@ namespace Productdetails.Controllers
             entities.SaveChanges();
 
             return true;
+          }
+             catch (Exception ex)
+            {
+              
+            } 
+              return true;
         }
 
         [Route("api/AjaxAPI/DeleteProduct")]
         [HttpPost]
         public void DeleteCustomer(Product _product)
         {
-            
-                Product updatedproduct = (from c in entities.Products
+            try{
+             Product updatedproduct = (from c in entities.Products
                                      where c.Id == _product.Id
                                      select c).FirstOrDefault();
                 entities.Products.Remove(updatedproduct);
                 entities.SaveChanges();
+            }
+                catch (Exception ex)
+            {
+              
+            } 
         }
     }
 }
